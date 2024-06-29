@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://sqvcbkh5t5ad"]
+
+[ext_resource type="ArrayMesh" uid="uid://bfxj3rmgpcoxj" path="res://kenney_blasterKit/dragon/dragonSlayer_Cube.res" id="1_b5md4"]
+[ext_resource type="Script" path="res://kenney_blasterKit/MeleeWeapon.cs" id="1_mdhfa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ncquf"]
+size = Vector3(0.5, 3, 0.1)
+
+[node name="MeleeWeapon" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 13
+mass = 100.0
+script = ExtResource("1_mdhfa")
+Weapons = Array[Mesh]([])
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.09278e-08, 0, -0.25, 0, 0.25, 0, 0.25, 0, -1.09278e-08, 0, 0, 0)
+mesh = ExtResource("1_b5md4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1, 0)
+shape = SubResource("BoxShape3D_ncquf")
+
+[node name="right" type="Marker3D" parent="."]
+transform = Transform3D(0.267982, -0.516391, -0.813343, 0.344801, 0.839709, -0.419524, 0.899611, -0.168017, 0.403079, 0.161708, -0.0828093, -0.0251525)
+
+[node name="left" type="Marker3D" parent="."]
+transform = Transform3D(0.311958, 0.810437, 0.495856, -0.929253, 0.368982, -0.0184502, -0.197915, -0.455021, 0.868209, -0.239905, -0.243688, 0.0489796)

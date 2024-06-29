@@ -1,0 +1,143 @@
+[gd_scene load_steps=17 format=3 uid="uid://co5x2dohlwl6v"]
+
+[ext_resource type="PackedScene" uid="uid://d2x2h8wk5i4e" path="res://kenney_blasterKit/Gun.tscn" id="1_8wbyv"]
+[ext_resource type="PackedScene" uid="uid://sqvcbkh5t5ad" path="res://kenney_blasterKit/MeleeWeapon.tscn" id="2_e4hjt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3j5f3"]
+sky_top_color = Color(0.109804, 0.129412, 0.278431, 1)
+sky_horizon_color = Color(0.392157, 0.513726, 0.756863, 1)
+ground_bottom_color = Color(0.392157, 0.513726, 0.756863, 1)
+ground_horizon_color = Color(0.392157, 0.513726, 0.756863, 1)
+
+[sub_resource type="Sky" id="Sky_djrkd"]
+sky_material = SubResource("ProceduralSkyMaterial_3j5f3")
+
+[sub_resource type="Environment" id="Environment_mrqqv"]
+background_mode = 2
+sky = SubResource("Sky_djrkd")
+tonemap_mode = 2
+glow_enabled = true
+glow_bloom = 0.1
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_albedo = Color(0, 0.615686, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vdux7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cio33"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_b47gt"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mjslg"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4abwa"]
+bounce = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v4gn"]
+albedo_color = Color(1, 0.196078, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_0trqd"]
+material = SubResource("StandardMaterial3D_3v4gn")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_whktj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q8fng"]
+size = Vector3(200, 0.1, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ttwiy"]
+albedo_color = Color(0.270588, 0.388235, 0.294118, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nogjx"]
+material = SubResource("StandardMaterial3D_ttwiy")
+size = Vector3(200, 0.1, 200)
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mrqqv")
+
+[node name="gun" parent="." instance=ExtResource("1_8wbyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.852697, -4.17486)
+
+[node name="gun2" parent="." instance=ExtResource("1_8wbyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.25, 0.852697, -4.17486)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="balls" type="Node3D" parent="."]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="balls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 0)
+collision_layer = 8
+collision_mask = 15
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="balls/RigidBody3D"]
+mesh = SubResource("BoxMesh_vdux7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="balls/RigidBody3D"]
+shape = SubResource("BoxShape3D_cio33")
+
+[node name="ball" type="RigidBody3D" parent="balls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6596, 2.38166, 6.78938)
+collision_layer = 8
+collision_mask = 15
+mass = 100.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="balls/ball"]
+mesh = SubResource("BoxMesh_b47gt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="balls/ball"]
+shape = SubResource("BoxShape3D_mjslg")
+
+[node name="ball2" type="RigidBody3D" parent="balls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09416, 1, -3.05195)
+collision_layer = 8
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_4abwa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="balls/ball2"]
+mesh = SubResource("SphereMesh_0trqd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="balls/ball2"]
+shape = SubResource("SphereShape3D_whktj")
+
+[node name="ball3" type="RigidBody3D" parent="balls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0381, 1, 3)
+collision_layer = 8
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_4abwa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="balls/ball3"]
+mesh = SubResource("SphereMesh_0trqd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="balls/ball3"]
+shape = SubResource("SphereShape3D_whktj")
+
+[node name="ball4" type="RigidBody3D" parent="balls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 10.2682)
+collision_layer = 8
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_4abwa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="balls/ball4"]
+mesh = SubResource("SphereMesh_0trqd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="balls/ball4"]
+shape = SubResource("SphereShape3D_whktj")
+
+[node name="MeleeWeapon" parent="." instance=ExtResource("2_e4hjt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.15372, 2.51114, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_q8fng")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_nogjx")

@@ -1,0 +1,157 @@
+[gd_scene load_steps=16 format=3 uid="uid://cpjkyy83oqp4b"]
+
+[ext_resource type="Script" path="res://GAME.cs" id="1_8tudj"]
+[ext_resource type="PackedScene" uid="uid://co5x2dohlwl6v" path="res://World/world.tscn" id="2_j2oo4"]
+[ext_resource type="Script" path="res://World/UI.cs" id="2_r5xek"]
+[ext_resource type="Script" path="res://World/Menu.cs" id="3_bi2lk"]
+[ext_resource type="PackedScene" uid="uid://ccog7p7tjr5c5" path="res://Player/PlayerScene.tscn" id="3_ld3t0"]
+[ext_resource type="PackedScene" uid="uid://4fqhyhqud44g" path="res://RayProjectile/RPMScene.tscn" id="4_k7ctw"]
+
+[sub_resource type="Gradient" id="Gradient_ctsw8"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 0, 0, 0.501961)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_070mn"]
+gradient = SubResource("Gradient_ctsw8")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_ft7nk"]
+colors = PackedColorArray(0.137255, 0.0705882, 0.0705882, 1, 0.27451, 0.27451, 0.27451, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o6oav"]
+gradient = SubResource("Gradient_ft7nk")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6qur7"]
+texture = SubResource("GradientTexture2D_o6oav")
+
+[sub_resource type="Gradient" id="Gradient_kxmfi"]
+colors = PackedColorArray(1, 0, 0.137255, 1, 1, 0, 0.27451, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jhh8m"]
+gradient = SubResource("Gradient_kxmfi")
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y8g7a"]
+texture = SubResource("GradientTexture2D_jhh8m")
+
+[sub_resource type="Theme" id="Theme_54vhv"]
+ProgressBar/styles/background = SubResource("StyleBoxTexture_6qur7")
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_y8g7a")
+
+[node name="GAME" type="Control" node_paths=PackedStringArray("Menu", "UI", "fps", "speed", "bulletCount", "pickName", "player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8tudj")
+Menu = NodePath("Menu")
+UI = NodePath("UI")
+fps = NodePath("UI/VboxContainer/HBoxContainer/fps")
+speed = NodePath("UI/VboxContainer/HBoxContainer/speed")
+bulletCount = NodePath("UI/VboxContainer/HBoxContainer/bulletcount")
+pickName = NodePath("UI/VboxContainer/HBoxContainer/pickname")
+player = NodePath("World/PlayerScene")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_r5xek")
+
+[node name="TextureRect" type="TextureRect" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_070mn")
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="up" type="Line2D" parent="UI/CenterContainer"]
+points = PackedVector2Array(0, -8, 0, -24)
+width = 2.0
+
+[node name="down" type="Line2D" parent="UI/CenterContainer"]
+points = PackedVector2Array(0, 8, 0, 24)
+width = 2.0
+
+[node name="left" type="Line2D" parent="UI/CenterContainer"]
+points = PackedVector2Array(-8, 0, -24, 0)
+width = 2.0
+
+[node name="right" type="Line2D" parent="UI/CenterContainer"]
+points = PackedVector2Array(8, 0, 24, 0)
+width = 2.0
+
+[node name="VboxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VboxContainer"]
+layout_mode = 2
+
+[node name="fps" type="Label" parent="UI/VboxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="speed" type="Label" parent="UI/VboxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/VboxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
+theme = SubResource("Theme_54vhv")
+show_percentage = false
+
+[node name="bulletcount" type="Label" parent="UI/VboxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="pickname" type="Label" parent="UI/VboxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Menu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_bi2lk")
+
+[node name="World" parent="." instance=ExtResource("2_j2oo4")]
+
+[node name="PlayerScene" parent="World" node_paths=PackedStringArray("maneger") instance=ExtResource("3_ld3t0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.6923, 0)
+maneger = NodePath("../../RPMScene")
+
+[node name="RPMScene" parent="." instance=ExtResource("4_k7ctw")]

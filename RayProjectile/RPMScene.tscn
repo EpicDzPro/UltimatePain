@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://4fqhyhqud44g"]
+
+[ext_resource type="Script" path="res://RayProjectile/RPMScript.cs" id="1_hton3"]
+
+[node name="RPMScene" type="Node3D"]
+script = ExtResource("1_hton3")
